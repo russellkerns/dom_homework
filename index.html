@@ -9,33 +9,58 @@
 
 <body>
   <div>
-    <h1> Pizza Clicker </h1>
+    <h2> Pizza Clicker </h2>
+    <span class="box-label">Resources</span>
     <div class="resource-container">
       <div class="resource-row">
-        <span class="resource-item label">💵 Money:</span>
-        <span class="resource-item value">15</span>
+        <div class="resource-flex-item label">💵 Money:</div>
+        <div class="resource-flex-item value">$<span id="money">15</span></div>
       </div>
       <div class="resource-row">
-        <span class="resource-item label">🍕 Pizzas:</span>
-        <span class="resource-item value">5</span>
+        <div class="resource-flex-item label">🍕 Pizzas:</div>
+        <div class="resource-flex-item value"><span id="pizza">5</span></div>
       </div>
       <div class="resource-row">
-        <span class="resource-item label">🥖 Dough:</span>
-        <span class="resource-item value">5</span>
+        <div class="resource-flex-item label">🥖 Dough:</div>
+        <div class="resource-flex-item value"><span id="dough">5</span></div>
       </div>
       <div class="resource-row">
-        <span class="resource-item label">🍅 Sauce:</span>
-        <span class="resource-item value">5</span>
+        <div class="resource-flex-item label">🍅 Sauce:</div>
+        <div class="resource-flex-item value"><span id="sauce">5</span></div>
       </div>
       <div class="resource-row">
-        <span class="resource-item label">🧀 Cheese:</span>
-        <span class="resource-item value">5</span>
+        <div class="resource-flex-item label">🧀 Cheese:</div>
+        <div class="resource-flex-item value"><span id="cheese">5</span></div>
       </div>
     </div>
   </div>
+  <span class="box-label">Actions</span>
   <div class="action-container">
-    <button type="button" class="action-button">Sell Pizza
-    </button>
+    <div class="action-row">
+      <div class="button-label">+$5</div>
+      <div type="button" class="action-button" id="sell-pizza">Sell Pizza
+      </div>
+    </div>
+    <div class="action-row">
+      <div class="button-label">-1 dough, -1 sauce, -1 cheese</div>
+      <div type="button" class="action-button" id="make-pizza">Make Pizza
+      </div>
+    </div>
+    <div class="action-row">
+      <div class="button-label">-$1</div>
+      <div type="button" class="action-button" id="buy-dough">Buy Dough
+      </div>
+    </div>
+    <div class="action-row">
+      <div class="button-label">-$1.50</div>
+      <div type="button" class="action-button" id="by-sauce">Buy Sauce
+      </div>
+    </div>
+    <div class="action-row">
+      <div class="button-label">-$2</div>
+      <div type="button" class="action-button" id="buy-cheese">Buy Cheese
+      </div>
+    </div>
   </div>
   <script type="text/javascript" src="script.js"></script>
 </body>
