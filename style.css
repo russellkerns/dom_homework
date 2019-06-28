@@ -1,0 +1,28 @@
+.h1 {
+  margin: 5px;
+}
+.resource-container {
+  font-size: 20px;
+  margin: 5px;
+  width: 275px;
+  border: 1px solid black;
+}
+.resource-row {
+  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resource-item.label {
+  text-align: left;
+}
+.resource-item.value {
+  text-align: right;
+}
+
+.action-container {
+  margin: 5px;
+  width: 275px;
+  border: 1px solid black;
+}
