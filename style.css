@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 h2 {
   margin-left: 15px;
   margin-bottom: 0px;
@@ -9,46 +13,42 @@ h2 {
   margin-left: 15px;
   font-size: 20px;
 }
-.resource-container {
+#inventory {
   font-size: 20px;
   margin: 5px;
   width: 350px;
   border: 1px solid black;
 }
-.resource-row {
+#inventory tr {
   margin: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
-.resource-flex-item.label {
+#inventory tr:first-child {
   text-align: left;
 }
-.resource-flex-item.value {
+#inventory tr:last-child {
   text-align: right;
 }
 
-.action-container {
+#actions {
   margin: 5px;
   width: 350px;
   border: 1px solid black;
   font-size: 18px;
-}
-
-.action-row {
+  padding: 10px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
 }
 
-.action-button {
-  margin: 5px;
-  padding: 5px;
-  font-size: 15px;
-  border: 1px solid black;
+#actions > button {
+  margin-bottom: 10px;
+  width: 80%;
+  font-size: 16px;
 }
 
-.button-label {
-  margin: 5px;
+#actions > button:last-child {
+  margin-bottom: 0px;
 }
