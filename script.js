@@ -1,7 +1,7 @@
 const data = {
   resources: [
     { id: 'money', name: '💵 Money', quantity: 0.0 },
-    { id: 'pizzas', name: '🍕Pizzas', quantity: 0 },
+    { id: 'pizza', name: '🍕Pizzas', quantity: 0 },
     { id: 'flour', name: '🌾 Flour', quantity: 5 },
     { id: 'sauce', name: '🍅 Sauce', quantity: 5 },
     { id: 'cheese', name: '🧀 Cheese', quantity: 5 }
@@ -53,11 +53,18 @@ const buildInventoryRowDiv = resource => {
   return inventoryRow;
 };
 
-const renderResources = data => {
+const renderResources = () => {
   const inventory = document.getElementById('inventory');
   data.resources.map(buildInventoryRowDiv).forEach(row => {
     inventory.appendChild(row);
   });
+};
+
+const clearResources = () => {
+  const inventory = document.getElementById('inventory');
+  while (inventory.childNodes.length) {
+    inventory.removeChild(inventory.firstChild);
+  }
 };
 
 const makeCostString = ingredients => {
@@ -67,8 +74,9 @@ const makeCostString = ingredients => {
 };
 
 const buildActionButton = action => {
-  const { display, ingredients } = action;
+  const { display, ingredients, id } = action;
   const button = document.createElement('button');
+  button.id = id;
   const buttonTitleDiv = document.createElement('div');
   buttonTitleDiv.innerText = display;
   button.appendChild(buttonTitleDiv);
@@ -78,13 +86,59 @@ const buildActionButton = action => {
   return button;
 };
 
-const renderActions = data => {
+const renderActions = () => {
   const actions = document.getElementById('actions');
   data.actions.map(buildActionButton).forEach(button => {
     actions.appendChild(button);
   });
 };
 
+const getResource = id => {
+  return data.resources.find(resource => resource.id === id);
+};
+
+const getAction = id => {
+  return data.actions.find(action => action.id === id);
+};
+
+const enoughIngredients = actionId => {
+  const ingredients = getAction(actionId).ingredients;
+  let enough = true;
+  Object.entries(ingredients).forEach(ingredient => {
+    const resource = getResource(ingredient[0]);
+    if (resource.quantity < ingredient[1]) {
+      enough = false;
+    }
+  });
+  return enough;
+};
+
+const executeAction = actionId => {
+  const canPerformAction = enoughIngredients(actionId);
+  if (canPerformAction) {
+    const ingredients = getAction(actionId).ingredients;
+    const output = getAction(actionId).output;
+    Object.entries(ingredients).forEach(ingredient => {
+      const resource = getResource(ingredient[0]);
+      resource.quantity -= ingredient[1];
+    });
+    Object.entries(output).forEach(ingredient => {
+      const resource = getResource(ingredient[0]);
+      resource.quantity += ingredient[1];
+    });
+  }
+  clearResources();
+  renderResources();
+};
+
+const attatchEventListeners = () => {
+  data.actions.forEach(action => {
+    const button = document.getElementById(action.id);
+    button.addEventListener('click', () => executeAction(action.id));
+  });
+};
+
 // *** MAIN ***
-renderResources(data);
-renderActions(data);
+renderResources();
+renderActions();
+attatchEventListeners();
