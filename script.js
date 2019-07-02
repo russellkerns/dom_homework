@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 const data = window.data;
 
 /**
@@ -69,7 +70,7 @@ const makeProducerDiv = producer => {
   </div>
   <div>
     <div>Quantity: ${producer.qty}</div>
-    <div>Coffee/second: ${producer.cps}</div>
+    <div>Total coffee/second: ${producer.cps}</div>
     <div>Cost: ${currentCost} coffee</div>
   </div>
   `;
@@ -105,6 +106,8 @@ const buyButtonClick = event => {
       renderProducers();
       updateCoffeeView();
       updateCPSView();
+    } else {
+      window.alert('Not enough coffee!');
     }
   }
 };
