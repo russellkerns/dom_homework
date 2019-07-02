@@ -1,11 +1,13 @@
 const data = window.data;
 
 /**
- * QUESTIONS
- * Care about purity / mutation, at this stage?
- * Make less functional-light nad more imperative
- * Give pre-written producer renderer?
- *
+ * QUESTIONS / TODO
+ * Do we care about purity / mutation, at this stage?
+ * Consider making style less functional-light and more imperative?
+ * Solution should probably give pre-written makeProducerDiv.
+ * In light of this consider not using the complex child selectors in the css, instead hard-code some class names into makeProducerDiv
+ * Starting point would leave all function defs in place but clear out their content?
+ * How to simplify? Remove producer unlock mechanism?
  */
 
 const updateCoffeeView = () => {
