@@ -5,11 +5,10 @@ const updateCoffeeView = () => {
   coffeeCounter.innerText = data.coffee;
 };
 
-const coffeeClick = event => {
-  event.preventDefault();
+const clickCoffee = () => {
   data.coffee += 1;
   updateCoffeeView();
 };
 
 const bigCoffee = document.getElementById('big_coffee');
-bigCoffee.addEventListener('click', coffeeClick);
+bigCoffee.addEventListener('click', clickCoffee);
