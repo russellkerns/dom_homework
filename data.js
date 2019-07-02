@@ -4,7 +4,7 @@ window.data = {
     {
       id: 'chemex',
       initialPrice: 10,
-      unlocksAt: 0,
+      unlocksAt: 5,
       unlocked: false,
       cps: 1,
       qty: 0
