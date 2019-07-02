@@ -4,19 +4,26 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="style.css">
-  <title>Pizza Clicker</title>
+  <title>Coffee Clicker</title>
 </head>
 
 <body>
-  <div>
-    <h2>Pizza Clicker</h2>
-    <span class="box-label">Inventory</span>
-    <table id="inventory">
-    </table>
+  <div class="column-container">
+    <div class="column">
+      <div class="column-header">Coffee Clicker</div>
+      <div class="container left">
+        <div class="counter-container">Coffee: <span id="coffee_counter">0</span></div>
+        <div class="cps-container"><span id="cps">0</span> coffee/second</div>
+        <div id="big_coffee">☕️</div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="column-header">Coffee Producers</div>
+      <div class="container right">
+      </div>
+    </div>
   </div>
-  <span class="box-label">Actions</span>
-  <div id="actions">
-  </div>
+  <script type="text/javascript" src="data.js"></script>
   <script type="text/javascript" src="script.js"></script>
 </body>
 
