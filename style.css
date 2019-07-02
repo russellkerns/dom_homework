@@ -53,14 +53,14 @@ body {
   font-size: 20px;
 }
 
-.container.right {
+#producer_container {
   padding: 10px;
   overflow: auto;
   border: 2px black solid;
   border-radius: 5px;
 }
 
-.container.right > div {
+#producer_container > div {
   margin-bottom: 5px;
   padding: 10px;
   border: 2px solid grey;
@@ -68,17 +68,17 @@ body {
   display: flex;
   justify-content: space-between;
 }
-.container.right > div > div {
+#producer_container > div > div {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.container.right > div > div:first-child > div {
+#producer_container > div > div:first-child > div {
   font-size: 20px;
 }
 
-.container.right button {
+#producer_container button {
   font-size: 15px;
   width: 50px;
 }
