@@ -18,7 +18,7 @@ window.data = {
       qty: 0
     },
     {
-      id: '10_cup_urn',
+      id: 'ten_cup_urn',
       initialPrice: 500,
       unlocksAt: 250,
       unlocked: false,
@@ -34,7 +34,7 @@ window.data = {
       qty: 0
     },
     {
-      id: '100_cup_urn',
+      id: 'ten_gallon_urn',
       initialPrice: 5000,
       unlocksAt: 2500,
       unlocked: false,
