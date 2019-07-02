@@ -20,8 +20,6 @@ body {
 }
 
 .container {
-  border: 2px black solid;
-  border-radius: 5px;
   width: 100%;
   height: calc(100vh - 40px);
 }
@@ -56,6 +54,8 @@ body {
 .container.right {
   padding: 10px;
   overflow: auto;
+  border: 2px black solid;
+  border-radius: 5px;
 }
 
 .container.right > div {
