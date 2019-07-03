@@ -71,14 +71,15 @@ const canBuyProducer = producerId => {
 
 const makeProducerDiv = producer => {
   const containerDiv = document.createElement('div');
+  containerDiv.className = 'producer';
   const displayName = makeDisplayNameFromId(producer.id);
   const currentCost = calculateProducerCost(producer);
   const html = `
-  <div>
+  <div class="producer-column">
     <div>${displayName}</div>
     <button type="button" id="buy_${producer.id}">Buy</button>
   </div>
-  <div>
+  <div class="producer-column">
     <div>Quantity: ${producer.qty}</div>
     <div>Coffee/second: ${producer.cps}</div>
     <div>Cost: ${currentCost} coffee</div>

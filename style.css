@@ -60,7 +60,7 @@ body {
   border-radius: 5px;
 }
 
-#producer_container > div {
+.producer {
   margin-bottom: 5px;
   padding: 10px;
   border: 2px solid grey;
@@ -68,17 +68,18 @@ body {
   display: flex;
   justify-content: space-between;
 }
-#producer_container > div > div {
+.producer-column {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-#producer_container > div > div:first-child > div {
+.producer-title {
   font-size: 20px;
+  border: 1px red solid;
 }
 
-#producer_container button {
+.producer button {
   font-size: 15px;
   width: 50px;
 }
