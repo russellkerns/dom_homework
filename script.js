@@ -11,6 +11,8 @@ const data = window.data;
  * Slice 3 buy button
  * Slice 4 tick
  *
+ * store total cps in state?
+ *
  * Do we care about purity / mutation, at this stage?
  * Consider making style less functional-light and more imperative?
  * Solution should probably give pre-written makeProducerDiv.
