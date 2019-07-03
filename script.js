@@ -3,6 +3,14 @@ const data = window.data;
 
 /**
  * QUESTIONS / TODO
+ * don't hardcode initialprice
+ * pass in data object
+ * make one render function? Maybe. Or slices?
+ * Slice 1 click coffee
+ * Slice 2 unlock producers
+ * Slice 3 buy button
+ * Slice 4 tick
+ *
  * Do we care about purity / mutation, at this stage?
  * Consider making style less functional-light and more imperative?
  * Solution should probably give pre-written makeProducerDiv.
@@ -33,7 +41,7 @@ const getUnlockedProducers = () => {
 
 const unlockProducers = () => {
   data.producers.forEach(producer => {
-    if (data.coffee >= producer.unlocksAt) {
+    if (data.coffee >= producer.initialPrice / 2) {
       producer.unlocked = true;
     }
   });
@@ -70,7 +78,7 @@ const makeProducerDiv = producer => {
   </div>
   <div>
     <div>Quantity: ${producer.qty}</div>
-    <div>Total coffee/second: ${producer.cps}</div>
+    <div>Coffee/second: ${producer.cps}</div>
     <div>Cost: ${currentCost} coffee</div>
   </div>
   `;
