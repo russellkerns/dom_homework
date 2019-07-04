@@ -32,11 +32,11 @@ Near the bottom of the `index.html` file you'll see two `<script>` tags; these m
 
 > Note that it is possible to access variables defined elsewhere when their script tags are in the correct order _without_ having to use the `window` object. But, if you use a linter, it will complain. Thus, we have chosen to use `window`.
 
-We've already declared the functions being tested in `script.js`, but they don't yet do anything; it will be up to you to fill them in. You'll also see that we've pre-written a function body or two for you, and you'll shortly discover that a couple of tests are already passing. Just why we've done this will become clearer as we proceed.
+We've already declared the functions being tested in `script.js`, but they don't yet do anything; it will be up to you to fill them in. You'll also see that we've pre-written a function body or two for you.
 
 ## First Steps
 
-todo
+explain mocha
 
 ## Extra Credit
 

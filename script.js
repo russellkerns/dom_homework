@@ -4,12 +4,9 @@
 /**
  * QUESTIONS / TODO
  * make one render function? Maybe. Or slices?
- * Slice 1 click coffee
- * Slice 2 unlock producers
- * Slice 3 buy button
- * Slice 4 tick
- *
- * store total cps in state?
+
+ * store total cps in state
+  store current cost in state
  *
  * Do we care about purity / mutation, at this stage?
  * Consider making style less functional-light and more imperative?
@@ -19,59 +16,57 @@
  * How to simplify? Remove producer unlock mechanism?
  */
 
-const updateCoffeeView = data => {
+/**************
+ *   SLICE 1
+ **************/
+
+function updateCoffeeView(data) {
   const coffeeCounterDiv = document.getElementById('coffee_counter');
   coffeeCounterDiv.innerText = data.coffee;
-};
+}
 
-const calculateTotalCPS = data => {
-  return data.producers.reduce((total, producer) => {
-    return total + producer.cps * producer.qty;
-  }, 0);
-};
+function clickCoffee(data) {
+  data.coffee += 1;
+  updateCoffeeView(data);
+  renderProducers(data);
+}
 
-const updateCPSView = data => {
-  const cpsDiv = document.getElementById('cps');
-  cpsDiv.innerText = calculateTotalCPS(data);
-};
+/**************
+ *   SLICE 2
+ **************/
 
-const getUnlockedProducers = data => {
-  return data.producers.filter(producer => producer.unlocked);
-};
-
-const unlockProducers = data => {
-  data.producers.forEach(producer => {
-    if (data.coffee >= producer.initialPrice / 2) {
+function unlockProducers(producers, coffeeCount) {
+  producers.forEach(producer => {
+    if (coffeeCount >= producer.initialPrice / 2) {
       producer.unlocked = true;
     }
   });
-};
+}
 
-const makeDisplayNameFromId = id => {
+function getUnlockedProducers(data) {
+  return data.producers.filter(producer => producer.unlocked);
+}
+
+function makeDisplayNameFromId(id) {
   return id
     .split('_')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
-};
+}
 
-const calculateProducerCost = producer => {
-  return Math.floor(producer.initialPrice * Math.pow(1.15, producer.qty));
-};
+function calculateProducerCost(initialPrice, quantity) {
+  return Math.floor(initialPrice * Math.pow(1.15, quantity));
+}
 
-const getProducerById = (data, producerId) => {
-  return data.producers.find(producer => producerId === producer.id);
-};
-
-const canAffordProducer = (data, producerId) => {
-  const producer = getProducerById(data, producerId);
-  return calculateProducerCost(producer) <= data.coffee;
-};
-
-const makeProducerDiv = producer => {
+function makeProducerDiv(producer) {
   const containerDiv = document.createElement('div');
   containerDiv.className = 'producer';
   const displayName = makeDisplayNameFromId(producer.id);
-  const currentCost = calculateProducerCost(producer);
+  const currentCost = calculateProducerCost(
+    producer.initialPrice,
+
+    producer.qty
+  );
   const html = `
   <div class="producer-column">
     <div class="producer-title">${displayName}</div>
@@ -85,10 +80,10 @@ const makeProducerDiv = producer => {
   `;
   containerDiv.innerHTML = html;
   return containerDiv;
-};
+}
 
-const renderProducers = data => {
-  unlockProducers(data);
+function renderProducers(data) {
+  unlockProducers(data.producers, data.coffee);
   const producerContainer = document.getElementById('producer_container');
   producerContainer.innerHTML = '';
   const unlockedProducers = getUnlockedProducers(data);
@@ -96,22 +91,46 @@ const renderProducers = data => {
     const producerDiv = makeProducerDiv(producer);
     producerContainer.appendChild(producerDiv);
   });
-};
+}
 
-const clickCoffee = data => {
-  data.coffee += 1;
-  updateCoffeeView(data);
-  renderProducers(data);
-};
+/**************
+ *   SLICE 3
+ **************/
 
-const buyButtonClick = (event, data) => {
+function calculateTotalCPS(data) {
+  return data.producers.reduce((total, producer) => {
+    return total + producer.cps * producer.qty;
+  }, 0);
+}
+
+function updateCPSView(data) {
+  const cpsDiv = document.getElementById('cps');
+  cpsDiv.innerText = calculateTotalCPS(data);
+}
+
+/**************
+ *   SLICE 4
+ **************/
+
+function getProducerById(data, producerId) {
+  return data.producers.find(producer => producerId === producer.id);
+}
+
+function canAffordProducer(data, producerId) {
+  const producer = getProducerById(data, producerId);
+  return (
+    calculateProducerCost(producer.initialPrice, producer.qty) <= data.coffee
+  );
+}
+
+function buyButtonClick(event, data) {
   if (event.target.tagName === 'BUTTON') {
     const producerId = event.target.id.slice(4);
     if (canAffordProducer(data, producerId)) {
       const producer = getProducerById(data, producerId);
-      data.coffee -= calculateProducerCost(producer);
+      data.coffee -= calculateProducerCost(producer.initialPrice, producer.qty);
       producer.qty += 1;
-      unlockProducers(data);
+      unlockProducers(data.producers, data.coffee);
       renderProducers(data);
       updateCoffeeView(data);
       updateCPSView(data);
@@ -119,13 +138,13 @@ const buyButtonClick = (event, data) => {
       window.alert('Not enough coffee!');
     }
   }
-};
+}
 
-const tick = data => {
+function tick(data) {
   data.coffee += calculateTotalCPS(data);
   renderProducers(data);
   updateCoffeeView(data);
-};
+}
 
 /*************************
  *  Start your engines!
