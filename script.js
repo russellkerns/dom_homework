@@ -1,20 +1,8 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-alert */
-
-/**
- * QUESTIONS / TODO
- * make one render function? Maybe. Or slices?
-
- * store total cps in state
-  store current cost in state
- *
- * Do we care about purity / mutation, at this stage?
- * Consider making style less functional-light and more imperative?
- * Solution should probably give pre-written makeProducerDiv.
- * In light of this consider not using the complex child selectors in the css, instead hard-code some class names into makeProducerDiv
- * Starting point would leave all function defs in place but clear out their content?
- * How to simplify? Remove producer unlock mechanism?
- */
+// TODO
+// Store total CPS in state
+// Store current cost in state
 
 /**************
  *   SLICE 1
