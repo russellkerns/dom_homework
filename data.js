@@ -3,63 +3,63 @@ window.data = {
   producers: [
     {
       id: 'chemex',
-      initialPrice: 10,
+      price: 10,
       unlocked: false,
       cps: 1,
       qty: 0
     },
     {
       id: 'percolator',
-      initialPrice: 100,
+      price: 100,
       unlocked: false,
       cps: 5,
       qty: 0
     },
     {
       id: 'ten_cup_urn',
-      initialPrice: 500,
+      price: 500,
       unlocked: false,
       cps: 10,
       qty: 0
     },
     {
       id: 'espresso_machine',
-      initialPrice: 1000,
+      price: 1000,
       unlocked: false,
       cps: 20,
       qty: 0
     },
     {
       id: 'ten_gallon_urn',
-      initialPrice: 5000,
+      price: 5000,
       unlocked: false,
       cps: 50,
       qty: 0
     },
     {
       id: 'coffeeshop',
-      initialPrice: 10000,
+      price: 10000,
       unlocked: false,
       cps: 100,
       qty: 0
     },
     {
       id: 'coffee_factory',
-      initialPrice: 50000,
+      price: 50000,
       unlocked: false,
       cps: 250,
       qty: 0
     },
     {
       id: 'coffee_fountain',
-      initialPrice: 100000,
+      price: 100000,
       unlocked: false,
       cps: 500,
       qty: 0
     },
     {
       id: 'coffee_river',
-      initialPrice: 500000,
+      price: 500000,
       unlocked: false,
       cps: 1000,
       qty: 0

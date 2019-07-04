@@ -2,20 +2,19 @@
 /* eslint-disable no-alert */
 // TODO
 // Store total CPS in state
-// Store current cost in state
 
 /**************
  *   SLICE 1
  **************/
 
-function updateCoffeeView(data) {
+function updateCoffeeView(coffeeQty) {
   const coffeeCounterDiv = document.getElementById('coffee_counter');
-  coffeeCounterDiv.innerText = data.coffee;
+  coffeeCounterDiv.innerText = coffeeQty;
 }
 
 function clickCoffee(data) {
   data.coffee += 1;
-  updateCoffeeView(data);
+  updateCoffeeView(data.coffee);
   renderProducers(data);
 }
 
@@ -25,7 +24,7 @@ function clickCoffee(data) {
 
 function unlockProducers(producers, coffeeCount) {
   producers.forEach(producer => {
-    if (coffeeCount >= producer.initialPrice / 2) {
+    if (coffeeCount >= producer.price / 2) {
       producer.unlocked = true;
     }
   });
@@ -42,19 +41,11 @@ function makeDisplayNameFromId(id) {
     .join(' ');
 }
 
-function calculateProducerCost(initialPrice, quantity) {
-  return Math.floor(initialPrice * Math.pow(1.15, quantity));
-}
-
 function makeProducerDiv(producer) {
   const containerDiv = document.createElement('div');
   containerDiv.className = 'producer';
   const displayName = makeDisplayNameFromId(producer.id);
-  const currentCost = calculateProducerCost(
-    producer.initialPrice,
-
-    producer.qty
-  );
+  const currentCost = producer.price;
   const html = `
   <div class="producer-column">
     <div class="producer-title">${displayName}</div>
@@ -106,9 +97,11 @@ function getProducerById(data, producerId) {
 
 function canAffordProducer(data, producerId) {
   const producer = getProducerById(data, producerId);
-  return (
-    calculateProducerCost(producer.initialPrice, producer.qty) <= data.coffee
-  );
+  return producer.price <= data.coffee;
+}
+
+function updatePrice(oldPrice) {
+  return Math.floor(oldPrice * 1.25);
 }
 
 function buyButtonClick(event, data) {
@@ -116,11 +109,12 @@ function buyButtonClick(event, data) {
     const producerId = event.target.id.slice(4);
     if (canAffordProducer(data, producerId)) {
       const producer = getProducerById(data, producerId);
-      data.coffee -= calculateProducerCost(producer.initialPrice, producer.qty);
+      data.coffee -= producer.price;
       producer.qty += 1;
+      producer.price = updatePrice(producer.price);
       unlockProducers(data.producers, data.coffee);
       renderProducers(data);
-      updateCoffeeView(data);
+      updateCoffeeView(data.coffee);
       updateCPSView(data);
     } else {
       window.alert('Not enough coffee!');
@@ -131,14 +125,15 @@ function buyButtonClick(event, data) {
 function tick(data) {
   data.coffee += calculateTotalCPS(data);
   renderProducers(data);
-  updateCoffeeView(data);
+  updateCoffeeView(data.coffee);
 }
 
 /*************************
  *  Start your engines!
  *************************/
 
-// Get our data from the window
+// Get starting data from the window object
+// (This comes from data.js)
 const data = window.data;
 
 // Add an event listener to the giant coffee emoji
@@ -152,5 +147,5 @@ producerContainer.addEventListener('click', event => {
   buyButtonClick(event, data);
 });
 
-// Call the tick function, passing in data, every second
+// Call the tick function passing in the data object once per second
 setInterval(() => tick(data), 1000);

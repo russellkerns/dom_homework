@@ -20,19 +20,18 @@ describe('Slice 2: Unlocking & Rendering Producers', function() {
   });
 
   describe('The getUnlockedProducers function', function() {
-    it('returns an array', function() {});
     it('returns an array of producer objects', function() {});
     it('filters out producer objects which are not unlocked', function() {});
   });
 
   describe('The makeDisplayNameFromId function', function() {
-    it('', function() {});
-    it('', function() {});
+    it('returns a string', function() {});
+    it('transforms its input string from snake_case to Title Case', function() {});
   });
 
-  describe('The calculateProducerCost function', function() {
-    it('', function() {});
-    it('', function() {});
+  describe('The updatePrice function', function() {
+    it('returns an integer, not a float', function() {});
+    it('returns 125% of the input price, rounded down', function() {});
   });
 
   describe('The makeProducerDiv function', function() {
