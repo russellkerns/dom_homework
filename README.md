@@ -20,15 +20,17 @@ In addition to a Coffee counter, the player will be able to see how many of each
 
 If this seems rather abstract, here's a [link to the finished product](). You might think you can view the source using your browser's developer tools to find some solutions
 
-## What We Give You
+## Starting Point
 
 We've written the HTML and CSS for Coffee Clicker for you. You'll be working _only_ in the `scripts.js` file. We promise that all of the tests can be passed without editing anything but `script.js`!
 
-We've also pre-written some javascript for you. The `data.js` file contains a large object which will serve as the data for Coffee Clicker. It contains two keys: `coffee`, whose value is an integer representing how much coffee the player has accumulated, and `producers`, whose value is an array of objects. Each of these objects represents a coffee producer, and the keys and values describe the producer's properties.
+But `script.js` isn't the only file in this project which contains Javascript; the `data.js` file, written for you, contains a large object which will serve as the data for Coffee Clicker. It contains two keys: `coffee`, whose value is an integer representing how much coffee the player has accumulated, and `producers`, whose value is an array of objects. Each of these objects represents a coffee producer, and the keys and values describe the producer's properties.
 
-While you won't need to edit the `data.js` file, you will need to programmatically access and modify the data it contains. Since you know you'll be writing your code in `script.js`, you might be wondering: how is it possible to access variables defined in one Javascript file in a different Javascript file? Later in the junior phase we'll talk about different ways to do this, but for now we've set this up for you. Near the bottom of the `index.html` file you'll see two `<script>` tags; these make sure the browser loads up `data.js` and `script.js` in sequence. This by itself means you can access variables defined in `data.js` inside of `script.js`, but if you have a linter set up in your code editor, it would complain about undefined variables inside of `script.js`.
+While you won't need to edit the `data.js` file, you will need to programmatically access and modify the data it contains. You might be wondering: how is it possible to access variables defined in one Javascript file in a different Javascript file? Later in the junior phase we'll talk about different ways to do this, but for now we've set this up for you.
 
-To solve this, we set up the `data.js` file to save the data object on the browser's built-in `window` object. At the top of `script.js`, we grab the `data` key from the `window` object and make it available in `script.js`'s global scope as `data`.
+Near the bottom of the `index.html` file you'll see two `<script>` tags; these make sure the browser loads up `data.js` and `script.js` in sequence. We set up the `data.js` file to save the data object on the browser's built-in `window` object. At the top of `script.js`, we grab the `data` key from the `window` object and make it available in `script.js`'s global scope as `data`.
+
+> Note that it is possible to access variables defined elsewhere when their script tags are in the correct order _without_ having to use the `window` object. But, if you use a linter, it will complain. Thus, we have chosen to use `window`.
 
 We've already declared the functions being tested in `script.js`, but they don't yet do anything; it will be up to you to fill them in. You'll also see that we've pre-written a function body or two for you, and you'll shortly discover that a couple of tests are already passing. Just why we've done this will become clearer as we proceed.
 
