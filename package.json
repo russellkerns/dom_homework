@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha script_test.js --watch"
+    "test": "mocha script_test.js --watch",
+    "start": "http-server . -p 8000 -o"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.2.0",
+    "http-server": "^0.11.1",
     "jsdom": "^15.1.1",
     "mocha": "^6.1.4"
   }

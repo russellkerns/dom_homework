@@ -1,13 +1,12 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-alert */
-// TODO
-// Store total CPS in state
-
 /**************
  *   SLICE 1
  **************/
 
 function updateCoffeeView(coffeeQty) {
+  console.log('UPDATING');
+
   const coffeeCounterDiv = document.getElementById('coffee_counter');
   coffeeCounterDiv.innerText = coffeeQty;
 }
@@ -77,14 +76,14 @@ function renderProducers(data) {
  **************/
 
 function calculateTotalCPS(data) {
-  return data.producers.reduce((total, producer) => {
+  data.totalCPS = data.producers.reduce((total, producer) => {
     return total + producer.cps * producer.qty;
   }, 0);
 }
 
 function updateCPSView(data) {
   const cpsDiv = document.getElementById('cps');
-  cpsDiv.innerText = calculateTotalCPS(data);
+  cpsDiv.innerText = data.totalCPS;
 }
 
 /**************
@@ -123,7 +122,7 @@ function buyButtonClick(event, data) {
 }
 
 function tick(data) {
-  data.coffee += calculateTotalCPS(data);
+  data.coffee += data.totalCPS;
   renderProducers(data);
   updateCoffeeView(data.coffee);
 }

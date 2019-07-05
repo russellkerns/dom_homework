@@ -1,5 +1,6 @@
 window.data = {
   coffee: 0,
+  totalCPS: 0,
   producers: [
     {
       id: 'chemex',

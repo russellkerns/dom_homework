@@ -53,7 +53,6 @@ describe('Slice 3: Updating Total CPS', function() {
 
   describe('The updateCPSView function', function() {
     it('calls document.getElementById()', function() {});
-    it('calls calculateTotalCPS', function() {});
     it('updates the total cps indicator to display the current total cps', function() {});
   });
 });

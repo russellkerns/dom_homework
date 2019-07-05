@@ -36,7 +36,9 @@ We've already declared the functions being tested in `script.js`, but they don't
 
 ## First Steps
 
-explain mocha
+**explain mocha**
+
+To get started, do `npm install`. The command `npm start` will start a simple web server and open up your page in the browser. The command `npm test` will run the tests on the command line. It might help to keep multiple console windows or tabs open if you want to run the server and run the tests at the same time.
 
 ## Extra Credit
 
