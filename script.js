@@ -1,12 +1,10 @@
-/* eslint-disable no-shadow */
 /* eslint-disable no-alert */
+
 /**************
  *   SLICE 1
  **************/
 
 function updateCoffeeView(coffeeQty) {
-  console.log('UPDATING');
-
   const coffeeCounterDiv = document.getElementById('coffee_counter');
   coffeeCounterDiv.innerText = coffeeQty;
 }
@@ -75,12 +73,6 @@ function renderProducers(data) {
  *   SLICE 3
  **************/
 
-function calculateTotalCPS(data) {
-  data.totalCPS = data.producers.reduce((total, producer) => {
-    return total + producer.cps * producer.qty;
-  }, 0);
-}
-
 function updateCPSView(data) {
   const cpsDiv = document.getElementById('cps');
   cpsDiv.innerText = data.totalCPS;
@@ -103,48 +95,80 @@ function updatePrice(oldPrice) {
   return Math.floor(oldPrice * 1.25);
 }
 
+function attemptToBuyProducer(data, producerId) {
+  if (canAffordProducer(data, producerId)) {
+    const producer = getProducerById(data, producerId);
+    data.coffee -= producer.price;
+    producer.qty += 1;
+    producer.price = updatePrice(producer.price);
+    data.totalCPS += producer.cps;
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function updateViewAfterPurchase(data) {
+  renderProducers(data);
+  updateCoffeeView(data.coffee);
+  updateCPSView(data);
+}
+
 function buyButtonClick(event, data) {
   if (event.target.tagName === 'BUTTON') {
     const producerId = event.target.id.slice(4);
-    if (canAffordProducer(data, producerId)) {
-      const producer = getProducerById(data, producerId);
-      data.coffee -= producer.price;
-      producer.qty += 1;
-      producer.price = updatePrice(producer.price);
-      unlockProducers(data.producers, data.coffee);
-      renderProducers(data);
-      updateCoffeeView(data.coffee);
-      updateCPSView(data);
-    } else {
-      window.alert('Not enough coffee!');
-    }
+    const result = attemptToBuyProducer(data, producerId);
+    if (!result) window.alert('Not enough coffee!');
+    else updateViewAfterPurchase(data);
   }
 }
 
 function tick(data) {
   data.coffee += data.totalCPS;
-  renderProducers(data);
   updateCoffeeView(data.coffee);
+  renderProducers(data);
 }
 
 /*************************
  *  Start your engines!
  *************************/
 
-// Get starting data from the window object
-// (This comes from data.js)
-const data = window.data;
+// First, a check to see if we're in a web browser; if we're just running this code in node for purposes of testing, we don't want to do all of these things.
+if (typeof process === 'undefined') {
+  // Get starting data from the window object
+  // (This comes from data.js)
+  const data = window.data;
 
-// Add an event listener to the giant coffee emoji
-const bigCoffee = document.getElementById('big_coffee');
-bigCoffee.addEventListener('click', () => clickCoffee(data));
+  // Add an event listener to the giant coffee emoji
+  const bigCoffee = document.getElementById('big_coffee');
+  bigCoffee.addEventListener('click', () => clickCoffee(data));
 
-// Add an event listener to the container that holds all of the producers
-// Pass in the browser event and our data object to the event listener
-const producerContainer = document.getElementById('producer_container');
-producerContainer.addEventListener('click', event => {
-  buyButtonClick(event, data);
-});
+  // Add an event listener to the container that holds all of the producers
+  // Pass in the browser event and our data object to the event listener
+  const producerContainer = document.getElementById('producer_container');
+  producerContainer.addEventListener('click', event => {
+    buyButtonClick(event, data);
+  });
 
-// Call the tick function passing in the data object once per second
-setInterval(() => tick(data), 1000);
+  // Call the tick function passing in the data object once per second
+  setInterval(() => tick(data), 1000);
+} else if (process) {
+  // This exports the code written here so we can import and test it in Mocha
+  module.exports = {
+    updateCoffeeView,
+    clickCoffee,
+    unlockProducers,
+    getUnlockedProducers,
+    makeDisplayNameFromId,
+    makeProducerDiv,
+    renderProducers,
+    updateCPSView,
+    getProducerById,
+    canAffordProducer,
+    updatePrice,
+    attemptToBuyProducer,
+    updateViewAfterPurchase,
+    buyButtonClick,
+    tick
+  };
+}

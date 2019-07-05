@@ -10,7 +10,14 @@ window.data = {
       qty: 0
     },
     {
-      id: 'percolator',
+      id: 'french_press',
+      price: 50,
+      unlocked: false,
+      cps: 2,
+      qty: 0
+    },
+    {
+      id: 'mr._coffee',
       price: 100,
       unlocked: false,
       cps: 5,
@@ -41,28 +48,42 @@ window.data = {
       id: 'coffeeshop',
       price: 10000,
       unlocked: false,
-      cps: 100,
+      cps: 75,
       qty: 0
     },
     {
       id: 'coffee_factory',
       price: 50000,
       unlocked: false,
-      cps: 250,
+      cps: 100,
       qty: 0
     },
     {
       id: 'coffee_fountain',
       price: 100000,
       unlocked: false,
-      cps: 500,
+      cps: 200,
       qty: 0
     },
     {
       id: 'coffee_river',
       price: 500000,
       unlocked: false,
+      cps: 500,
+      qty: 0
+    },
+    {
+      id: 'coffee_ocean',
+      price: 1000000,
+      unlocked: false,
       cps: 1000,
+      qty: 0
+    },
+    {
+      id: 'coffee_planet',
+      price: 5000000,
+      unlocked: false,
+      cps: 2000,
       qty: 0
     }
   ]
