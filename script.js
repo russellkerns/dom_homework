@@ -1,6 +1,5 @@
 /* eslint-disable no-alert */
 
-console.log('testing');
 
 /**************
  *   SLICE 1
