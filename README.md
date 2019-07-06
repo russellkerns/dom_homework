@@ -51,10 +51,6 @@ Without breaking any of the tests, can you find a way to implement one or more o
 
 ## Development Notes
 
-Deployment
+To deploy changes to the gh-pages branch, first do `npm run deploy`. This will generate a deploy folder with a base64-obfuscated `script.js` file. Next,
 
-```
-npm run deploy
-git subtree push --prefix deploy origin gh-pages
-
-```
+`git subtree push --prefix deploy origin gh-pages`
