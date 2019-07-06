@@ -105,18 +105,17 @@ function attemptToBuyProducer(data, producerId) {
   }
 }
 
-function updateViewAfterPurchase(data) {
-  renderProducers(data);
-  updateCoffeeView(data.coffee);
-  updateCPSView(data.totalCPS);
-}
-
 function buyButtonClick(event, data) {
   if (event.target.tagName === 'BUTTON') {
     const producerId = event.target.id.slice(4);
     const result = attemptToBuyProducer(data, producerId);
-    if (!result) window.alert('Not enough coffee!');
-    else updateViewAfterPurchase(data);
+    if (!result) {
+      window.alert('Not enough coffee!');
+    } else {
+      renderProducers(data);
+      updateCoffeeView(data.coffee);
+      updateCPSView(data.totalCPS);
+    }
   }
 }
 
@@ -164,7 +163,6 @@ if (typeof process === 'undefined') {
     canAffordProducer,
     updatePrice,
     attemptToBuyProducer,
-    updateViewAfterPurchase,
     buyButtonClick,
     tick
   };

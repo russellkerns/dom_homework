@@ -257,13 +257,15 @@ describe('Slice 2: Unlocking & Rendering Producers', function() {
       const producerContainer = document.getElementById('producer_container');
       assert.isAbove(producerContainer.childNodes.length, 0);
     });
-    // That is, you need to call unlockProducers, assuming that function is working
+
+    // Hint: call the function written to do this!
     it('unlocks any locked producers which need to be unlocked', function() {
       code.renderProducers(data);
       expect(data.producers[0].unlocked).to.be.equal(true);
       expect(data.producers[1].unlocked).to.be.equal(true);
       expect(data.producers[2].unlocked).to.be.equal(false);
     });
+
     it('only appends unlocked producers', function() {
       code.renderProducers(data);
       const producerContainer = document.getElementById('producer_container');
@@ -395,16 +397,17 @@ describe('Slice 3: Buying Producers & Tick', function() {
     });
   });
 
-  describe.only('The attemptToBuyProducer function', function() {
+  describe('The attemptToBuyProducer function', function() {
     // Set up some fake data
     let data;
     beforeEach('initialize some fake data', function() {
       data = {
         coffee: 100,
+        totalCPS: 0,
         producers: [
-          { id: 'producer_A', price: 50, qty: 0 },
-          { id: 'producer_B', price: 200, qty: 0 },
-          { id: 'producer_C', price: 500, qty: 0 }
+          { id: 'producer_A', price: 50, cps: 5, qty: 0 },
+          { id: 'producer_B', price: 200, cps: 10, qty: 0 },
+          { id: 'producer_C', price: 500, cps: 20, qty: 0 }
         ]
       };
     });
@@ -431,7 +434,7 @@ describe('Slice 3: Buying Producers & Tick', function() {
       expect(data.producers[1].qty).to.be.equal(0);
     });
 
-    it("decrements the player's coffee by the *current* price of the producer only if the player can afford it", function() {
+    it("decrements the player's coffee by the *current* price of the producer, but only if the player can afford it", function() {
       code.attemptToBuyProducer(data, 'producer_B');
       expect(data.coffee).to.be.equal(100);
 
@@ -439,65 +442,169 @@ describe('Slice 3: Buying Producers & Tick', function() {
       expect(data.coffee).to.be.equal(50);
     });
     // hint: use a function already written
-    xit('updates the price of the producer to 125% of the previous price, rounded down, only if the player can afford the producer', function() {
-      expect(true).to.equal(false);
+    it('updates the price of the producer to 125% of the previous price, rounded down, but only if the player can afford the producer', function() {
+      code.attemptToBuyProducer(data, 'producer_A');
+      expect(data.producers[0].price).to.be.equal(62);
+
+      code.attemptToBuyProducer(data, 'producer_B');
+      expect(data.producers[1].price).to.be.equal(200);
     });
     // hint: use a function already written
-    xit('updates the total CPS, only if the player can afford the producer', function() {
-      expect(true).to.equal(false);
-    });
-    xit("does not modify data in any way if the player tries to buy something they can't afford", function() {
-      expect(true).to.equal(false);
-    });
-  });
+    it('updates the total CPS, but only if the player can afford the producer', function() {
+      code.attemptToBuyProducer(data, 'producer_A');
+      expect(data.totalCPS).to.be.equal(5);
 
-  describe('The updateViewAfterPurchase function', function() {
-    xit('renders the producers to the DOM, showing an updated quantity', function() {
-      expect(true).to.equal(false);
+      code.attemptToBuyProducer(data, 'producer_B');
+      expect(data.totalCPS).to.be.equal(5);
     });
-    xit('renders the producers to the DOM, showing an updated cost', function() {
-      expect(true).to.equal(false);
-    });
-    xit('updates the coffee count on the DOM, reflecting that coffee has been spent', function() {
-      expect(true).to.equal(false);
-    });
-    xit("updates the total CPS on the DOM, reflecting that the new producer's CPS has been added", function() {
-      expect(true).to.equal(false);
-    });
-    xit('does not mutate the data (it changes only the DOM)', function() {
-      expect(true).to.equal(false);
+    it("does not modify data in any way if the player tries to buy something they can't afford", function() {
+      const snapshot = JSON.stringify(data);
+      code.attemptToBuyProducer(data, 'producer_B');
+      expect(JSON.stringify(data)).to.equal(snapshot);
     });
   });
 
   describe('The buyButtonClick function', function() {
-    // hint: check event.target.tagName
-    xit("does not modify data if the event passed in doesn't represent a click on a button element", function() {
-      expect(true).to.equal(false);
+    // JSDOM doesn't have window.alert, so we'll roll our own
+    window.alert = alertString => {
+      console.log('window.alert() called with:', alertString);
+    };
+
+    // Clear out our fake DOM
+    beforeEach('reset the fake DOM', function() {
+      resetJSDOM();
     });
+
+    // Set up some fake data
+    let data;
+    beforeEach('initialize some fake data', function() {
+      data = {
+        coffee: 100,
+        totalCPS: 0,
+        producers: [
+          { id: 'producer_A', price: 50, cps: 5, qty: 0 },
+          { id: 'producer_B', price: 200, cps: 10, qty: 0 },
+          { id: 'producer_C', price: 500, cps: 20, qty: 0 }
+        ]
+      };
+    });
+
     // hint: use the function you've already written!
-    xit('mutates the data only if the player can afford the producer', function() {
-      expect(true).to.equal(false);
+    it('mutates the data only if the player can afford the producer', function() {
+      // buyButtonClick accepts a browser event argument.
+      // Here we simulate this by creating an event object ourselves.
+      // We'll only give that fake event bject the properties that
+      // are relevant for our purposes
+
+      // this purchase should suceed
+      const snapshot = JSON.stringify(data);
+      const event = { target: { tagName: 'BUTTON', id: 'buy_producer_A' } };
+      code.buyButtonClick(event, data);
+      expect(JSON.stringify(data)).to.not.be.equal(snapshot);
+
+      // this purchase should fail
+      const snapshot2 = JSON.stringify(data);
+      const event2 = { target: { tagName: 'BUTTON', id: 'buy_producer_B' } };
+      code.buyButtonClick(event2, data);
+      expect(JSON.stringify(data)).to.be.equal(snapshot2);
     });
+
     // hint: see https://developer.mozilla.org/en-US/docs/Web/API/Window/alert
-    xit('shows an alert box if the player cannot afford the producer', function() {
-      expect(true).to.equal(false);
+    it('shows an alert box with the message "Not enough coffee!" only if the player cannot afford the producer', function() {
+      const spyOnAlert = sinon.spy(window, 'alert');
+
+      // this purchase should fail
+      const event = { target: { tagName: 'BUTTON', id: 'buy_producer_B' } };
+      code.buyButtonClick(event, data);
+      expect(spyOnAlert.called).to.equal(true);
+
+      // this purchase should not fail
+      spyOnAlert.called = false;
+      const event2 = { target: { tagName: 'BUTTON', id: 'buy_producer_A' } };
+      code.buyButtonClick(event2, data);
+      expect(spyOnAlert.called).to.equal(false);
+
+      spyOnAlert.restore();
     });
-    // hint: use the function you've already written!
-    xit('updates the dom if only the player can afford the producer', function() {
-      expect(true).to.equal(false);
+
+    // Notice that at the bottom of script.js we attach an event listener
+    // that calls `buyButtonClick` not just to a buy button but to
+    // the entire producer container. Here we test that you filter clicks
+    // so that the function pays attention only to clicks on buy buttons
+    it("does not modify data or show an alert box if the event passed in doesn't represent a click on a button element", function() {
+      const spyOnAlert = sinon.spy(window, 'alert');
+      const snapshot = JSON.stringify(data);
+
+      // this represents a click on something other than a button
+      const event = { target: { tagName: 'DIV' } };
+      code.buyButtonClick(event, data);
+
+      // now let's check to make sure this didn't do anything
+      expect(spyOnAlert.called).to.equal(false);
+      expect(JSON.stringify(data)).to.equal(snapshot);
+    });
+
+    // hint: call a function you've already written!
+    it('renders the updated producers when a purchase succeeds', function() {
+      const event = { target: { tagName: 'BUTTON', id: 'buy_producer_A' } };
+      code.buyButtonClick(event, data);
+      const producerContainer = document.getElementById('producer_container');
+      expect(producerContainer.childNodes.length).to.be.equal(1);
+    });
+
+    // hint: call a function you've already written!
+    it('updates the coffee count on the DOM, reflecting that coffee has been spent, when a purchase succeeds', function() {
+      const event = { target: { tagName: 'BUTTON', id: 'buy_producer_A' } };
+      code.buyButtonClick(event, data);
+      const coffeeCounter = document.getElementById('coffee_counter');
+      expect(coffeeCounter.innerText).to.equal(50);
+    });
+
+    // hint: call a function you've already written!
+    it("updates the total CPS on the DOM, reflecting that the new producer's CPS has been added", function() {
+      const event = { target: { tagName: 'BUTTON', id: 'buy_producer_A' } };
+      code.buyButtonClick(event, data);
+      const cpsIndicator = document.getElementById('cps');
+      expect(cpsIndicator.innerText).to.equal(5);
     });
   });
 
-  describe('The tick function', function() {
-    xit('increases coffee count by the total CPS', function() {
-      expect(true).to.equal(false);
+  describe.only('The tick function', function() {
+    // Clear out our fake DOM
+    beforeEach('reset the fake DOM', function() {
+      resetJSDOM();
     });
-    // hint: use what you've written! The tick function can be very short
-    xit('updates the dom to reflect this new coffee count', function() {
-      expect(true).to.equal(false);
+
+    // Set up some fake data
+    let data;
+    beforeEach('initialize some fake data', function() {
+      data = {
+        coffee: 90,
+        totalCPS: 10,
+        producers: [
+          { id: 'producer_A', price: 50, cps: 5, qty: 0 },
+          { id: 'producer_B', price: 200, cps: 10, qty: 1 },
+          { id: 'producer_C', price: 500, cps: 20, qty: 0 }
+        ]
+      };
     });
-    xit('updates the dom to reflect any newly unlocked producers', function() {
-      expect(true).to.equal(false);
+
+    it('increases coffee count by the total CPS', function() {
+      code.tick(data);
+      expect(data.coffee).to.be.equal(100);
+    });
+
+    // hint: use what you've written already! The tick function can be just a few lines
+    it('updates the dom to reflect this new coffee count', function() {
+      code.tick(data);
+      const coffeeCounter = document.getElementById('coffee_counter');
+      expect(coffeeCounter.innerText).to.equal(100);
+    });
+
+    it('updates the dom to reflect any newly unlocked producers', function() {
+      code.tick(data);
+      const producerContainer = document.getElementById('producer_container');
+      expect(producerContainer.childNodes.length).to.be.equal(2);
     });
   });
 });
