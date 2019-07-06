@@ -2,33 +2,42 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-// copy all files but script.js to deploy directory
+const deployDir = 'deploy';
+
+// copy all project files but script.js to deploy directory
 const filesToCopy = ['index.html', 'favicon.ico', 'style.css', 'data.js'];
 filesToCopy.forEach(filename => {
-  fs.copyFile(filename, path.join('.', 'deploy', filename), err => {
-    if (err) throw err;
-  });
+  try {
+    fs.copyFileSync(filename, path.join('.', deployDir, filename));
+  } catch (err) {
+    console.error(err);
+  }
 });
 
-// base64 script.js and copy it in
-fs.readFile('script.js', 'UTF-8', function(err, data) {
-  if (err) throw err;
-  const base64 = Buffer.from(data).toString('base64');
-  fs.appendFile(path.join('.', 'deploy', 'script.js'), 'eval(atob("', function(
-    err
-  ) {
-    if (err) throw err;
-    fs.appendFile(path.join('.', 'deploy', 'script.js'), base64, function(err) {
-      if (err) throw err;
-      fs.appendFile(path.join('.', 'deploy', 'script.js'), '"))', function(
-        err
-      ) {
-        if (err) throw err;
-      });
-    });
-  });
-});
+// load plaintest
+let plaintext;
+try {
+  plaintext = fs.readFileSync('script.js');
+} catch (err) {
+  console.error(err);
+}
 
-// deploy to gh-pages branch
-let output = execSync('git subtree push --prefix deploy origin gh-pages');
-console.log('shell out: ', output.toString('binary'));
+// convert
+const base64 = Buffer.from(plaintext).toString('base64');
+
+// save
+try {
+  fs.writeFileSync(path.join('.', deployDir, 'script.js'), 'eval(atob("');
+} catch (err) {
+  console.error(err);
+}
+try {
+  fs.appendFileSync(path.join('.', deployDir, 'script.js'), base64);
+} catch (err) {
+  console.error(err);
+}
+try {
+  fs.appendFileSync(path.join('.', deployDir, 'script.js'), '"));');
+} catch (err) {
+  console.error(err);
+}

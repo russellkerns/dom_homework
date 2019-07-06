@@ -48,3 +48,13 @@ Without breaking any of the tests, can you find a way to implement one or more o
 - Edit `style.css` to change the application's color scheme to something more appropriate to a coffee-themed game
 - Add in the ability to sell producers for a full (or partial?) refund of one's coffee
 - Add in a one-time unlock-able upgrade system like Cookie Clicker's. Example upgrades: buying a Coffee Grinder upgrade might double the CPS of all percolators; buying extra cursors would increase the coffee one gets from clicks; buying a Caffeinated Cursor upgrade might make the coffee one gets from clicks in some way proportionate to total CPS. Note that this is a _giant_ feature!
+
+## Development Notes
+
+Deployment
+
+```
+npm run deploy
+git subtree push --prefix deploy origin gh-pages
+
+```
