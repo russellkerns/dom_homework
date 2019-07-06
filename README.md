@@ -34,11 +34,23 @@ Near the bottom of the `index.html` file you'll see two `<script>` tags; these m
 
 We've already declared the functions being tested in `script.js`, but they don't yet do anything; it will be up to you to fill them in. You'll also see that we've pre-written a function body or two for you.
 
+## Mocha
+
+During Foundations, we used a testing framework called Jasmine to define tests and another library called Testem to run those tests in the web browser. For most of junior phase, we'll no longer use these libraries. Instead, we'll use a another popular testing framework called Mocha.
+
+Mocha allows us to write and run tests-- but instead of running tests in the browser, Mocha runs them on the command line. After you clone a repository with mocha tests, you'll first need to run `npm install` to get everything set up. Then, to start the tests, run `npm test`.
+
+You'll see some console output that prints the name of each test, finally letting you know that none have passed an all are pending. Now open the test file. You'll notice that the `it()` blocks defining tests are all prefaced with an `x`. This is part of Mocha's syntax-- adding and removing the `x` lets you decide which tests you want to enable and disable
+
+But what if you only want to run one or two tests? It would be tedious to have to add and remove `x`s to the entire test suite. To help you accomplish this, Mocha lets you add `.only` after `it` and `describe` to isolate particular tests. That is, to run only the tests in a particular `describe` block, use: the syntax `describe.only()`. To isolate one or more `it` blocks, use `it.only()`. This is much like clicking a test to isolate it in Testem.
+
 ## First Steps
 
-**explain mocha**
+The command `npm start` will start a simple web server and open up your page in the browser. It might help to keep multiple console windows or tabs open if you want to run the server and run the tests at the same time.
 
-To get started, do `npm install`. The command `npm start` will start a simple web server and open up your page in the browser. The command `npm test` will run the tests on the command line. It might help to keep multiple console windows or tabs open if you want to run the server and run the tests at the same time.
+True unit tests look at blocks of code in isolation from each other. Many of the tests we've written here are not true unit tests; the code they test will sometimes need to invoke other code, tested elsewhere. That is, we're going to ask some of your functions to rely on others.
+
+This means that you wont't be able to pass some of the later tests until you pass earlier ones. If you get stuck, ask fellows or instructors for help. And, remember that it's okay for some functions you write to invoke other functions you've written.
 
 ## Extra Credit
 
