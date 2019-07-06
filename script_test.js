@@ -569,7 +569,7 @@ describe('Slice 3: Buying Producers & Tick', function() {
     });
   });
 
-  describe.only('The tick function', function() {
+  describe('The tick function', function() {
     // Clear out our fake DOM
     beforeEach('reset the fake DOM', function() {
       resetJSDOM();
