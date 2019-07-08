@@ -46,9 +46,11 @@ But what if you only want to run one or two tests? It would be tedious to have t
 
 ## First Steps
 
-The command `npm start` will start a simple web server and open up your page in the browser. It might help to keep multiple console windows or tabs open if you want to run the server and run the tests at the same time.
+This assignment is set up so that as you begin to pass the tests, you'll see more functionality appear in the web page you're working on. So you'll be going back and forth between code, tests, and the final product in the browser. 
 
-True unit tests look at blocks of code in isolation from each other. Many of the tests we've written here are not true unit tests; the code they test will sometimes need to invoke other code, tested elsewhere. That is, we're going to ask some of your functions to rely on others.
+The command `npm start` will start a simple web server and open up your page; you'll need to keep this server running if you want to be able to refresh the page as you work. It might help to keep multiple console windows or tabs open if you want to run the server and run the tests at the same time.
+
+True unit tests look at blocks of code in isolation from each other. Many of the tests we've written here are not true unit tests; the code they test will sometimes need to invoke other code, tested elsewhere. That is, we're going to ask some of your functions to call others, sometimes for their return values, sometimes for their effects on the DOM, and sometimes for their effects on the data.
 
 This means that you wont't be able to pass some of the later tests until you pass earlier ones. If you get stuck, ask fellows or instructors for help. And, remember that it's okay for some functions you write to invoke other functions you've written.
 
@@ -59,7 +61,7 @@ Without breaking any of the tests, can you find a way to implement one or more o
 - Periodically save the game state using `window.localStorage` so that the player doesn't have to start over every time they refresh the page; load the game state from `window.localStorage` when the page loads. ([This](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) might be useful.)
 - Edit `style.css` to change the application's color scheme to something more appropriate to a coffee-themed game
 - Add in the ability to sell producers for a full (or partial?) refund of one's coffee
-- Add in a one-time unlock-able upgrade system like Cookie Clicker's. Example upgrades: buying a Coffee Grinder upgrade might double the CPS of all percolators; buying extra cursors would increase the coffee one gets from clicks; buying a Caffeinated Cursor upgrade might make the coffee one gets from clicks in some way proportionate to total CPS. Note that this is a _giant_ feature!
+- Add in a one-time unlock-able upgrade system like Cookie Clicker's. Example upgrades: buying a Coffee Grinder upgrade might double the CPS of all percolators; buying extra cursors would increase the coffee one gets from clicks; buying a Caffeinated Cursor upgrade might make the coffee one gets from clicks in some way proportionate to total CPS. Note that this is a big, comlpex feature!
 
 ## Development Notes
 
