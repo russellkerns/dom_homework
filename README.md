@@ -18,7 +18,7 @@ Importantly, the price (in coffee) of each producer will increase proportionatel
 
 In addition to a Coffee counter, the player will be able to see how many of each producer they possess, the current price of each producer, the CPS (coffee per second) of each producer, and the total CPS for all producers, combined. Finally, to make things more interesting, we won't show all of the producers at the start of the game-- they'll be unlocked successively as they player accumulates more coffee.
 
-If this seems rather abstract, here's a [link to the finished product](). You might think you can view the source using your browser's developer tools to find some solutions
+If this seems rather abstract, here's a [link to the finished product](https://krnsk0.github.io/dom_homework/). You might think you can view the source using your browser's developer tools to find some solutions
 
 ## Starting Point
 
@@ -46,7 +46,7 @@ But what if you only want to run one or two tests? It would be tedious to have t
 
 ## First Steps
 
-This assignment is set up so that as you begin to pass the tests, you'll see more functionality appear in the web page you're working on. So you'll be going back and forth between code, tests, and the final product in the browser. 
+This assignment is set up so that as you begin to pass the tests, you'll see more functionality appear in the web page you're working on. So you'll be going back and forth between code, tests, and the final product in the browser.
 
 The command `npm start` will start a simple web server and open up your page; you'll need to keep this server running if you want to be able to refresh the page as you work. It might help to keep multiple console windows or tabs open if you want to run the server and run the tests at the same time.
 
