@@ -59,14 +59,18 @@ function makeProducerDiv(producer) {
   return containerDiv;
 }
 
+function deleteAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
+
 function renderProducers(data) {
   unlockProducers(data.producers, data.coffee);
   const producerContainer = document.getElementById('producer_container');
-  producerContainer.innerHTML = '';
-  const unlockedProducers = getUnlockedProducers(data);
-  unlockedProducers.forEach(producer => {
-    const producerDiv = makeProducerDiv(producer);
-    producerContainer.appendChild(producerDiv);
+  deleteAllChildNodes(producerContainer);
+  getUnlockedProducers(data).forEach(producer => {
+    producerContainer.appendChild(makeProducerDiv(producer));
   });
 }
 
@@ -79,8 +83,7 @@ function getProducerById(data, producerId) {
 }
 
 function canAffordProducer(data, producerId) {
-  const producer = getProducerById(data, producerId);
-  return producer.price <= data.coffee;
+  return getProducerById(data, producerId).price <= data.coffee;
 }
 
 function updateCPSView(cps) {
@@ -129,7 +132,16 @@ function tick(data) {
  *  Start your engines!
  *************************/
 
-// First, a check to see if we're in a web browser; if we're just running this code in node for purposes of testing, we don't want to do all of these things.
+// You don't need to edit any of the code below
+// But it is worth reading so you know what it does!
+
+// So far we've just defined some functions; we haven't actually
+// called any of them. Now it's time to get things moving.
+
+// We'll begin with a check to see if we're in a web browser; if we're just running this code in node for purposes of testing, we don't want to 'start the engines'.
+
+// How does this check work? Node gives us access to a global variable /// called `process`, but this variable is undefined in the browser. So,
+// we can see if we're in node by checking to see if `process` exists.
 if (typeof process === 'undefined') {
   // Get starting data from the window object
   // (This comes from data.js)
@@ -148,8 +160,12 @@ if (typeof process === 'undefined') {
 
   // Call the tick function passing in the data object once per second
   setInterval(() => tick(data), 1000);
-} else if (process) {
-  // This exports the code written here so we can import and test it in Mocha
+}
+// Meanwhile, if we aren't in a browser and are instead in node
+// we'll need to exports the code written here so we can import and
+// Don't worry if it's not clear exactly what's going on here;
+// We just need this to run the tests in Mocha.
+else if (process) {
   module.exports = {
     updateCoffeeView,
     clickCoffee,
@@ -157,6 +173,7 @@ if (typeof process === 'undefined') {
     getUnlockedProducers,
     makeDisplayNameFromId,
     makeProducerDiv,
+    deleteAllChildNodes,
     renderProducers,
     updateCPSView,
     getProducerById,

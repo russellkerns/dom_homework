@@ -3,7 +3,7 @@ const { expect, assert } = require('chai');
 
 // JSDOM lets us pretend we're in a web browser even through we're running this code in Node. Here, we import JSOM and create fake document and window objects. We assign these to global so they're available to your code, when we run it.
 const { JSDOM } = require('jsdom');
-const { window } = new JSDOM(`<!DOCTYPE html><body></body>`).window;
+const window = new JSDOM(`<!DOCTYPE html><body></body>`).window;
 const { document } = window;
 global.window = window;
 global.document = document;
@@ -16,7 +16,9 @@ const code = require('./script.js');
 
 // this is a helper function to reset the fake dom
 function resetJSDOM() {
-  document.body.innerHTML = '';
+  while (document.body.firstChild) {
+    document.body.removeChild(document.body.firstChild);
+  }
 
   const coffeeCounter = document.createElement('div');
   coffeeCounter.id = 'coffee_counter';
@@ -216,6 +218,32 @@ describe('Slice 2: Unlocking & Rendering Producers', function() {
       expect(qtyDiv.innerHTML).to.equal('Quantity: 5');
       expect(cpsDiv.innerHTML).to.equal('Coffee/second: 100');
       expect(costDiv.innerHTML).to.equal('Cost: 57 coffee');
+    });
+  });
+
+  describe.only('The deleteAllChildNodes function', function() {
+    // make a tiny little document just for this describe block
+    let doc;
+    beforeEach('rebuild our tiny document', function() {
+      doc = new JSDOM(`
+      <!DOCTYPE html>
+      <body>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </body>
+      `).window.document;
+    });
+
+    it('calls the `.removeChild()` method on the dom node passed in', function() {
+      const spyOnRemoveChild = sinon.spy(doc.body, 'removeChild');
+      code.deleteAllChildNodes(doc.body);
+      expect(spyOnRemoveChild.called).to.be.equal(true);
+    });
+
+    it('gets rid of all of the children of the DOM node passed in', function() {
+      code.deleteAllChildNodes(doc.body);
+      expect(doc.body.childNodes.length).to.be.equal(0);
     });
   });
 
