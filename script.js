@@ -1,6 +1,5 @@
 /* eslint-disable no-alert */
 
-
 /**************
  *   SLICE 1
  **************/
@@ -84,13 +83,13 @@ function canAffordProducer(data, producerId) {
   return producer.price <= data.coffee;
 }
 
-function updatePrice(oldPrice) {
-  return Math.floor(oldPrice * 1.25);
-}
-
 function updateCPSView(cps) {
   const cpsDiv = document.getElementById('cps');
   cpsDiv.innerText = cps;
+}
+
+function updatePrice(oldPrice) {
+  return Math.floor(oldPrice * 1.25);
 }
 
 function attemptToBuyProducer(data, producerId) {
