@@ -8,13 +8,13 @@ By the end of your first week at Fullstack, you'll have almost all of the skills
 
 In the typical incremental game, the player performs some repetitive action--often, clicking--to gain or "increment" a resource, like gold, points, or cookies. This resource can then be spent to purchase "buildings" or "producers" which increment the resource automatically, giving the player the experience of "automating" the repetitive action. As the player progresses, the game begins to "play itself"; new buildings and features are unlocked, and the player's attention turns away from repetitive clicking and toward making decisions about optimizing expenditure of resources to maximize returns.
 
-If this sounds about as fun as balancing a checkbook, that's fine-- it's not for everyone. But it's also easier to see than it is to explain. So take a few minutes to check out [Cookie Clicker](https://orteil.dashnet.org/cookieclicker/); just remember to come back and start the workshop, afterward!
+If this sounds about as fun as balancing a checkbook, that's totally fine-- these games are not for everyone. But it's also easier to see in action than it is to explain. So take a few minutes to check out [Cookie Clicker](https://orteil.dashnet.org/cookieclicker/); just remember to come back and start the workshop, afterward!
 
 ## Coffee Clicker
 
 Our Cookie Clicker clone will be coffee-themed. The player will click a giant Coffee emoji, incrementing a counter showing the quantity of Coffee they currently possess. Coffee can be spent to purchase coffee-producing devices, such as percolators and espresso machines; every second, the player will passively accumulate coffee proportionate to the number and kind of coffee-producing devices they've purchased.
 
-Importantly, the price (in coffee) of each producer will increase proportionately to the number already in the player's possession. This is what enables the game to remain interesting even after coffee production has been automated: the player has to make decisions about which purchases make best use of their coffee depending on the current price of each producer. Check out the demo below or try out Cookie Clicker if what we're talking about here isn't clear.
+Importantly, the price (in coffee) of each producer will increase according to the number already in the player's possession. This is what enables the game to remain interesting even after coffee production has been automated: the player has to make decisions about which purchases make best use of their coffee depending on the current price of each producer. Check out the demo below or try out Cookie Clicker if what we're talking about here isn't clear.
 
 In addition to a Coffee counter, the player will be able to see how many of each producer they possess, the current price of each producer, the CPS (coffee per second) of each producer, and the total CPS for all producers, combined. Finally, to make things more interesting, we won't show all of the producers at the start of the game-- they'll be unlocked successively as they player accumulates more coffee.
 
@@ -78,7 +78,7 @@ Without breaking any of the tests, can you find a way to implement one or more o
 - Edit `style.css` to change the application's color scheme to something more appropriate to a coffee-themed game
 - Add in the ability to sell producers for a full (or partial?) refund of one's coffee
 - Add in a one-time unlock-able upgrade system like Cookie Clicker's. Example upgrades: buying a Coffee Grinder upgrade might double the CPS of all percolators; buying extra cursors would increase the coffee one gets from clicks; buying a Caffeinated Cursor upgrade might make the coffee one gets from clicks in some way proportionate to total CPS. Note that this is a big, complex feature!
-- Do you think progress in the game is too fast? Maybe too slow? Try modifying the data to see if you can balance the game to your liking.
+- Do you think progress in the game is too fast? Maybe too slow? Try modifying the data to see if you can balance the game to your liking. You might also modify the formula which increases the prices when producers are purchased.
 - Figure out how to deploy your completed application to the public internet using Github Pages. Google is your friend, here, but [here's a start](https://www.ostraining.com/blog/coding/github-pages/).
 
 ## **FSA Staff Dev Notes**
