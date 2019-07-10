@@ -34,7 +34,10 @@ const base64 = Buffer.from(plaintext).toString('base64');
 
 // save the obfuscated file
 try {
-  fs.writeFileSync(path.join('.', deployDir, 'script.js'), 'eval(atob("');
+  fs.writeFileSync(
+    path.join('.', deployDir, 'script.js'),
+    '// please, no cheating! \n eval(atob("'
+  );
 } catch (err) {
   console.error(err);
 }
