@@ -84,6 +84,16 @@ describe('Slice 1: Clicking & Incrementing Coffee', function() {
   });
 });
 
+// You've made it through slice 1-- great! If these two tests are passing, you should be able to open the page up in your browser (do `npm run start` and then visit http://localhost:8000) and see some functionality. At the bottom of `script.js` you'll see some code that attaches your `clickCoffee` function to the coffee emoji you see on screen (this is just a div element). Now, when you click the emoji, you should see the counter update (because of the `updateCoffeeView` function).
+
+// Try opening up your browser's console. On a mac in Chrome, the shortcut is cmd + option + J. Here, you have access to all of the functions defined in the global scope.
+
+// Try running `updateCoffeeView(5000)`. What do you see? Why?
+
+// Now try runnning `data`. You'll see the data object printed to the console-- something like: `{coffee: 0, totalCPS: 0, producers: Array(12)}`. you can click the arrow to expand this object.
+
+// To debug, you can manually manipulate variables to see how the app responds. Try `data.coffee = 5000`, then try running `data` again. The data has changed, but what we see on screen hasn't changed. Why? Finally, try running `clickCoffee(data);`. Does what you see make sense?
+
 /***************************
  *   SLICE 2 STARTS HERE
  ***************************/
@@ -221,7 +231,7 @@ describe('Slice 2: Unlocking & Rendering Producers', function() {
     });
   });
 
-  describe.only('The deleteAllChildNodes function', function() {
+  describe('The deleteAllChildNodes function', function() {
     // make a tiny little document just for this describe block
     let doc;
     beforeEach('rebuild our tiny document', function() {
@@ -235,13 +245,15 @@ describe('Slice 2: Unlocking & Rendering Producers', function() {
       `).window.document;
     });
 
-    it('calls the `.removeChild()` method on the dom node passed in', function() {
+    xit('calls the `.removeChild()` method on the dom node passed in at least once', function() {
       const spyOnRemoveChild = sinon.spy(doc.body, 'removeChild');
       code.deleteAllChildNodes(doc.body);
-      expect(spyOnRemoveChild.called).to.be.equal(false);
+      expect(spyOnRemoveChild.called).to.be.equal(true);
+
+      spyOnRemoveChild.restore();
     });
 
-    it('gets rid of all of the children of the DOM node passed in', function() {
+    xit('gets rid of all of the children of the DOM node passed in', function() {
       code.deleteAllChildNodes(doc.body);
       expect(doc.body.childNodes.length).to.be.equal(0);
     });
@@ -315,7 +327,45 @@ describe('Slice 2: Unlocking & Rendering Producers', function() {
       expect(producerContainer.childNodes.length).to.be.equal(3);
     });
   });
+
+  // This far into slice 2, you've defined a function which renders the producers to the screen, with the help of some other functions. What producers are rendered depends, of course, on how much coffee the player has accumulated.
+
+  // While it might be passing the tests, nothing in our code yet calls the renderProducers function. How can we test it in the browser?
+
+  // Try running `renderProducers(data)` in the browser console. This might show you some producers, depending on how much coffee you have. You can click a bunch more times and run the function again to test it out-- or you can just set `coffee.data` to a big number before running `renderProducers(data)`. Try that to see if the function works.
+
+  // How is our code actually going to run this function? That's what the next test, the last one in slice 2, addresses; we'll go back to a funciton you wrote in slice 1 and modify it, slightly.
+  describe('The clickCoffee function', function() {
+    // Clear out our fake DOM
+    beforeEach('reset the fake DOM', function() {
+      resetJSDOM();
+    });
+
+    // Set up some fake data. Note that we're just below the threshhold to render producer_B
+    let data;
+    beforeEach('initialize some fake data', function() {
+      data = {
+        coffee: 99,
+        totalCPS: 10,
+        producers: [
+          { id: 'producer_A', price: 50, cps: 5, qty: 0 },
+          { id: 'producer_B', price: 200, cps: 10, qty: 1 },
+          { id: 'producer_C', price: 500, cps: 20, qty: 0 }
+        ]
+      };
+    });
+
+    xit('updates the dom to reflect any newly unlocked producers', function() {
+      code.clickCoffee(data);
+      const producerContainer = document.getElementById('producer_container');
+      expect(producerContainer.childNodes.length).to.be.equal(2);
+    });
+  });
 });
+
+// That's the end of slice 2. In the browser, you should now have an interactive app that lets you click the coffee mug to get coffee, and which renders producers to the screen as they become unlocked.
+
+// Next we'll wire up the 'buy' buttons on the proucers and then set up a 'tick' function which 'runs' the producers, adding coffee automatically every second based on what producers the player has.
 
 /***************************
  *   SLICE 3 STARTS HERE
@@ -603,7 +653,7 @@ describe('Slice 3: Buying Producers & Tick', function() {
       resetJSDOM();
     });
 
-    // Set up some fake data
+    // Set up some fake data. Note that we're just one tick below the threshhold to render producer_B
     let data;
     beforeEach('initialize some fake data', function() {
       data = {

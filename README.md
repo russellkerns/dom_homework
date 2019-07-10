@@ -48,7 +48,7 @@ But what if you only want to run or see one or two tests? It would be tedious to
 
 ## Reading Mocha Output
 
-Mocha output is divided into three pieces.
+Mocha output in the console is divided into three pieces.
 
 First, the names of all of the active tests which are not pending will be printed out along with checkmarks, if they pass. If colorized output is enabled, the passing tests will be green and the non-passing tests will be red.
 
@@ -56,7 +56,7 @@ Second, once all of the tests and their status have been printed out, you'll get
 
 Finally, Mocha will print out the Javascript error messages from the failing specs. Most often, these will include a reference to the line number in the test file indicating an assertion or expectation which has failed.
 
-Importantly, the output of any `console.log()` statements, whether written in the test files or your own code, will appear in the _first_ section, as this is when the code actually executes. Mocha remembers error messages and only prints them during the third, final, output phase.
+Importantly, the output of any `console.log()` statements, whether written in the test files or your own code, will appear in the _first_ section, as this is when the code actually executes. Mocha remembers error messages and only prints them during the third, final, part of its output.
 
 It can sometimes be useful to clear the console output periodically when running tests to allow you to more easily find the beginning of the current run.
 
@@ -77,8 +77,11 @@ Without breaking any of the tests, can you find a way to implement one or more o
 - Periodically save the game state using `window.localStorage` so that the player doesn't have to start over every time they refresh the page; load the game state from `window.localStorage` when the page loads. ([This](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) might be useful.)
 - Edit `style.css` to change the application's color scheme to something more appropriate to a coffee-themed game
 - Add in the ability to sell producers for a full (or partial?) refund of one's coffee
-- Add in a one-time unlock-able upgrade system like Cookie Clicker's. Example upgrades: buying a Coffee Grinder upgrade might double the CPS of all percolators; buying extra cursors would increase the coffee one gets from clicks; buying a Caffeinated Cursor upgrade might make the coffee one gets from clicks in some way proportionate to total CPS. Note that this is a big, comlpex feature!
+- Add in a one-time unlock-able upgrade system like Cookie Clicker's. Example upgrades: buying a Coffee Grinder upgrade might double the CPS of all percolators; buying extra cursors would increase the coffee one gets from clicks; buying a Caffeinated Cursor upgrade might make the coffee one gets from clicks in some way proportionate to total CPS. Note that this is a big, complex feature!
+- Figure out how to deploy your completed application to the public internet using Github Pages. Google is your friend, here, but [here's a start](https://www.ostraining.com/blog/coding/github-pages/).
 
-## Development Notes
+## **FSA Staff Dev Notes**
 
-To deploy changes to the gh-pages branch, first do `npm run deploy`. This will generate a deploy folder with a base64-obfuscated `script.js` file. Next, do `git subtree push --prefix deploy origin gh-pages`.
+Github serves the gh-pages branch of this repo from the FSA account. The deploy process applies some very minimal obfuscation to the code to make it slightly more difficult to students to look at the source for solutions.
+
+To deploy any changes to the solution code to the gh-pages branch, first do `npm run deploy`. This will generate a deploy folder with a base64-obfuscated `script.js` file. Next, after making a commit, do `git subtree push --prefix deploy origin gh-pages`.
