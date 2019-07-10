@@ -238,7 +238,7 @@ describe('Slice 2: Unlocking & Rendering Producers', function() {
     it('calls the `.removeChild()` method on the dom node passed in', function() {
       const spyOnRemoveChild = sinon.spy(doc.body, 'removeChild');
       code.deleteAllChildNodes(doc.body);
-      expect(spyOnRemoveChild.called).to.be.equal(true);
+      expect(spyOnRemoveChild.called).to.be.equal(false);
     });
 
     it('gets rid of all of the children of the DOM node passed in', function() {

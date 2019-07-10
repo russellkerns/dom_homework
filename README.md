@@ -40,9 +40,25 @@ During Foundations, we used a testing framework called Jasmine to define tests a
 
 Mocha allows us to write and run tests-- but instead of running tests in the browser, Mocha runs them on the command line. After you clone a repository with mocha tests, you'll first need to run `npm install` to get everything set up. Then, to start the tests, run `npm test`.
 
-You'll see some console output that prints the name of each test, finally letting you know that none have passed an all are pending. Now open the test file. You'll notice that the `it()` blocks defining tests are all prefaced with an `x`. This is part of Mocha's syntax-- adding and removing the `x` lets you decide which tests you want to enable and disable
+Mocha will _watch_ the files in your folder and restart the tests every time you save a change.
 
-But what if you only want to run one or two tests? It would be tedious to have to add and remove `x`s to the entire test suite. To help you accomplish this, Mocha lets you add `.only` after `it` and `describe` to isolate particular tests. That is, to run only the tests in a particular `describe` block, use: the syntax `describe.only()`. To isolate one or more `it` blocks, use `it.only()`. This is much like clicking a test to isolate it in Testem.
+You'll see some console output that prints the name of each test, finally letting you know that none have passed an all are pending. Now open the test file. You'll notice that the `it()` blocks defining tests are all prefaced with an `x`. This is part of Mocha's syntax-- adding and removing the `x` lets you decide to set some tests as _pending_, meaning that while their names will be printed out to the console, they won't run.
+
+But what if you only want to run or see one or two tests? It would be tedious to have to add and remove `x`s to the entire test suite. To help you accomplish this, Mocha lets you add `.only` after `it` and `describe` to isolate particular tests. That is, to run only the tests in a particular `describe` block, use: the syntax `describe.only()`. To isolate one or more `it` blocks, use `it.only()`. This is much like clicking a test to isolate it in Testem.
+
+## Reading Mocha Output
+
+Mocha output is divided into three pieces.
+
+First, the names of all of the active tests which are not pending will be printed out along with checkmarks, if they pass. If colorized output is enabled, the passing tests will be green and the non-passing tests will be red.
+
+Second, once all of the tests and their status have been printed out, you'll get a summary: e.g. "5 passing, 2 failing."
+
+Finally, Mocha will print out the Javascript error messages from the failing specs. Most often, these will include a reference to the line number in the test file indicating an assertion or expectation which has failed.
+
+Importantly, the output of any `console.log()` statements, whether written in the test files or your own code, will appear in the _first_ section, as this is when the code actually executes. Mocha remembers error messages and only prints them during the third, final, output phase.
+
+It can sometimes be useful to clear the console output periodically when running tests to allow you to more easily find the beginning of the current run.
 
 ## First Steps
 
