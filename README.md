@@ -78,6 +78,7 @@ Without breaking any of the tests, can you find a way to implement one or more o
 - Edit `style.css` to change the application's color scheme to something more appropriate to a coffee-themed game
 - Add in the ability to sell producers for a full (or partial?) refund of one's coffee
 - Add in a one-time unlock-able upgrade system like Cookie Clicker's. Example upgrades: buying a Coffee Grinder upgrade might double the CPS of all percolators; buying extra cursors would increase the coffee one gets from clicks; buying a Caffeinated Cursor upgrade might make the coffee one gets from clicks in some way proportionate to total CPS. Note that this is a big, complex feature!
+- Do you think progress in the game is too fast? Maybe too slow? Try modifying the data to see if you can balance the game to your liking.
 - Figure out how to deploy your completed application to the public internet using Github Pages. Google is your friend, here, but [here's a start](https://www.ostraining.com/blog/coding/github-pages/).
 
 ## **FSA Staff Dev Notes**

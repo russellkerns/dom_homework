@@ -686,3 +686,7 @@ describe('Slice 3: Buying Producers & Tick', function() {
     });
   });
 });
+
+// If you've finished the last slice, you should now be able, in the browser, to buy producers and see the coffee count increment automatically. It's possible to progress in the game more quickly than at the end of slice 2, when all you could do is click, but if you want to cheat to make sure everything is working, remember that you can always open the console and set `data.coffee` to a very large number.
+
+// Don't forget to commit your changes-- and to take a look at the extra credit in the README, if you have time to spare!
