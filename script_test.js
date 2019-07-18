@@ -43,9 +43,9 @@ function resetJSDOM() {
 
 // First, if you haven't, read the README.md file. If you've done that already, move on!
 
-// Before you get started writing code that passes the tests, be sure to do `npm run start` so you can also see the result of your works in the web browser. This will make it easier to understand what the tests are asking for. We'll provide some guidance as to what functionality you can expect to see in the browser at each step of the way. At first, you should see a giant coffee emoji with some text above it and an empty div tag labeled "Coffee producers."
+// Before you get started writing code that passes the tests, be sure to do `npm run start` and open http://localhost:8000 so you can also see the results of your work in the web browser. This will make it easier to understand what the tests are asking for. We'll also be providing some guidance as to what functionality you can expect to see at each step of the way. At first, you should see a giant coffee emoji with some text above it and an empty div tag labeled "Coffee producers."
 
-// Remember that you can open multiple terminal windows or mutliple tabs within your terminal emulator-- this will let you run the web server at the same time that you run the tests using Mocha.
+// Remember that you can open multiple terminal emulator windows or mutliple tabs within your terminal emulator-- this will let you run the web server at the same time that you run the tests using Mocha.
 
 // Finally, remember that to run any of these tests, you'll need to get rid of the `x` in `xit()` before the test.
 
@@ -300,10 +300,14 @@ describe('Slice 2: Unlocking & Rendering Producers', function() {
       spyOnQuerySelector.restore();
     });
 
-    xit('appends some elements to the producer container', function() {
+    xit('appends some producer div elements to the producer container', function() {
       code.renderProducers(data);
       const producerContainer = document.getElementById('producer_container');
+      // Did you generate the right number of child nodes?
       assert.isAbove(producerContainer.childNodes.length, 0);
+
+      // We'll just check the structure of the first one to make sure it roughly matches the structure of what makeProducerDiv returns
+      expect(producerContainer.childNodes[0].childNodes).to.have.length(5);
     });
 
     // Hint: call the function written to do this!
