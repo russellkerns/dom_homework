@@ -14,7 +14,7 @@ const sinon = require('sinon');
 // This imports your code so we can test it
 const code = require('./script.js');
 
-// this is a helper function to reset the fake dom
+// This is a helper function to reset the fake dom to a state that roughly imitates what index.html provides in the browser.
 function resetJSDOM() {
   while (document.body.firstChild) {
     document.body.removeChild(document.body.firstChild);
@@ -41,11 +41,19 @@ function resetJSDOM() {
  *   SLICE 1 STARTS HERE
  ***************************/
 
+// First, if you haven't, read the README.md file. If you've done that already, move on!
+
+// Before you get started writing code that passes the tests, be sure to do `npm run start` and open http://localhost:8000 so you can also see the results of your work in the web browser. This will make it easier to understand what the tests are asking for. We'll also be providing some guidance as to what functionality you can expect to see at each step of the way. At first, you should see a giant coffee emoji with some text above it and an empty div tag labeled "Coffee producers."
+
+// Remember that you can open multiple terminal emulator windows or mutliple tabs within your terminal emulator-- this will let you run the web server at the same time that you run the tests using Mocha.
+
+// Finally, remember that to run any of these tests, you'll need to get rid of the `x` in `xit()` before the test.
+
 describe('Slice 1: Clicking & Incrementing Coffee', function() {
   beforeEach('reset the fake DOM', function() {
     resetJSDOM();
   });
-
+  // First, we're having you write a function which will run every time the coffee icon is clicked. You don't need to attach this as an event listener-- we've done that for you near the bottom of `script.js`.
   describe('The updateCoffeeView function', function() {
     xit('calls document.getElementById() or document.querySelector()', function() {
       const spyOnGetElementById = sinon.spy(document, 'getElementById');
@@ -292,10 +300,14 @@ describe('Slice 2: Unlocking & Rendering Producers', function() {
       spyOnQuerySelector.restore();
     });
 
-    xit('appends some elements to the producer container', function() {
+    xit('appends some producer div elements to the producer container', function() {
       code.renderProducers(data);
       const producerContainer = document.getElementById('producer_container');
+      // Did you generate the right number of child nodes?
       assert.isAbove(producerContainer.childNodes.length, 0);
+
+      // We'll just check the structure of the first one to make sure it roughly matches the structure of what makeProducerDiv returns
+      expect(producerContainer.childNodes[0].childNodes).to.have.length(5);
     });
 
     // Hint: call the function written to do this!
