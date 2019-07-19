@@ -4,19 +4,43 @@
  *   SLICE 1
  **************/
 
-function updateCoffeeView(coffeeQty) {}
+function updateCoffeeView(coffeeQty) {
+  const coffee = document.querySelector('#coffee_counter');
+  coffee.innerText = coffeeQty;
+}
 
-function clickCoffee(data) {}
+function clickCoffee(data) {
+  data.coffee += 1;
+  updateCoffeeView(data.coffee);
+  renderProducers(data);
+}
 
 /**************
  *   SLICE 2
  **************/
 
-function unlockProducers(producers, coffeeCount) {}
+function unlockProducers(producers, coffeeCount) {
+  producers.map(producer => {
+    if (coffeeCount >= producer.price / 2) {
+      producer.unlocked = true;
+    }
+  });
+}
 
-function getUnlockedProducers(data) {}
+function getUnlockedProducers(data) {
+  return data.producers.filter(producer => {
+    return producer.unlocked;
+  });
+}
 
-function makeDisplayNameFromId(id) {}
+function makeDisplayNameFromId(id) {
+  return id
+    .split('_')
+    .map(singleWord => {
+      return singleWord[0].toUpperCase() + singleWord.slice(1);
+    })
+    .join(' ');
+}
 
 // You shoulnd't need to edit this function-- its tests should pass once you've written makeDisplayNameFromId
 function makeProducerDiv(producer) {
@@ -39,27 +63,76 @@ function makeProducerDiv(producer) {
   return containerDiv;
 }
 
-function deleteAllChildNodes(parent) {}
+function deleteAllChildNodes(parent) {
+  while (parent.childNodes.length) {
+    parent.removeChild(parent.firstChild);
+  }
+}
 
-function renderProducers(data) {}
+function renderProducers(data) {
+  unlockProducers(data.producers, data.coffee);
+  const producerContainer = document.querySelector('#producer_container');
+  deleteAllChildNodes(producerContainer);
+  const unlockedProd = getUnlockedProducers(data);
+  unlockedProd.map(producer => {
+    producerContainer.appendChild(makeProducerDiv(producer));
+  });
+}
 
 /**************
  *   SLICE 3
  **************/
 
-function getProducerById(data, producerId) {}
+function getProducerById(data, producerId) {
+  return data.producers.filter(producer => {
+    return producer.id === producerId ? producer : null;
+  })[0];
+}
 
-function canAffordProducer(data, producerId) {}
+function canAffordProducer(data, producerId) {
+  const producer = getProducerById(data, producerId);
+  return data.coffee >= producer.price ? true : false;
+}
 
-function updateCPSView(cps) {}
+function updateCPSView(cps) {
+  const coffeePerSec = document.querySelector('#cps');
+  coffeePerSec.innerText = cps;
+}
 
-function updatePrice(oldPrice) {}
+function updatePrice(oldPrice) {
+  return Math.floor(oldPrice * 1.25);
+}
 
-function attemptToBuyProducer(data, producerId) {}
+function attemptToBuyProducer(data, producerId) {
+  const producer = getProducerById(data, producerId);
+  const bool = canAffordProducer(data, producerId);
+  if (bool) {
+    producer.qty += 1;
+    data.coffee -= producer.price;
+    producer.price = updatePrice(producer.price);
+    data.totalCPS += producer.cps;
+  }
+  return bool;
+}
 
-function buyButtonClick(event, data) {}
+function buyButtonClick(event, data) {
+  if (event.target.tagName === 'BUTTON') {
+    const id = event.target.id.slice(4);
+    const bool = attemptToBuyProducer(data, id);
+    if (!bool) window.alert('Not enough coffee!');
+    else {
+      renderProducers(data);
+      updateCoffeeView(data.coffee);
+      updateCPSView(data.totalCPS);
+    }
+  }
+}
 
-function tick(data) {}
+function tick(data) {
+  data.coffee += data.totalCPS;
+  updateCoffeeView(data.coffee);
+  renderProducers(data);
+}
 
 /*************************
  *  Start your engines!
@@ -114,6 +187,6 @@ else if (process) {
     updatePrice,
     attemptToBuyProducer,
     buyButtonClick,
-    tick
+    tick,
   };
 }
